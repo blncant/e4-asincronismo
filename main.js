@@ -15,11 +15,11 @@ const requestData = async (id) => {
 };
 
 //GUARDAR INFO
-//let pokemones = JSON.parse(localStorage.getItem("pokemones")) || [];
+let pokemones = JSON.parse(localStorage.getItem("pokemones")) || [];
 
-/* const saveLocalStorage = (pokemones) => {
+const saveLocalStorage = (pokemones) => {
 	localStorage.setItem("pokemones", JSON.stringify(pokemones));
-}; */
+};
 
 //RENDER
 const getPokeHtml = ({ name, sprites, height, weight, types }) => {
@@ -42,10 +42,8 @@ const getPokeHtml = ({ name, sprites, height, weight, types }) => {
     `;
 };
 
-const buscarPoke = (value) => data.find((d) => d.id === value);
-
-const renderResult = () => {
-	if (fetchedPoke.id === searchedValue) {
+const renderResult = (value) => {
+	if (pokemones.id === value) {
 		resultContainer.innerHTML = getPokeHtml();
 		form.reset();
 		return;
@@ -80,11 +78,10 @@ const submitSearch = async (e) => {
 		return;
 	}
 
-	const searchedPoke = buscarPoke(Number(searchedValue));
-	renderResult(searchedPoke);
+	renderResult(Number(searchedValue));
 
-	//pokemones = [fetchedPoke, ...pokemones];
-	//saveLocalStorage(pokemones);
+	pokemones = [fetchedPoke, ...pokemones];
+	saveLocalStorage(pokemones);
 };
 
 const init = () => {
